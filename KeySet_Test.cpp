@@ -3,18 +3,18 @@
 
 #include "stdafx.h"
 #include "KeySet_Test.h"
-#include <cstring>
-#define MAX_LOADSTRING 100
+#include "KeySetSystem.h"
 
+
+#define MAX_LOADSTRING 100
 // 全局变量:
 HINSTANCE g_hInst;								// 当前实例
 HWND g_hWnd;
+
 TCHAR szTitle[MAX_LOADSTRING];					// 标题栏文本
 TCHAR szWindowClass[MAX_LOADSTRING];			// 主窗口类名
 
 static int g_nFps = 0;
-
-void OutPutText(HWND hWnd,HDC hdc,const TCHAR* szText,RECT& rect);
 
 // 此代码模块中包含的函数的前向声明:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -50,8 +50,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	int constFps = 60;
 	float timeInOneFps = 1000.0f/constFps; // 每秒60帧，则1帧就是约16毫秒
-	DWORD timeBegin = 0;;
-	DWORD timeTotal = 0;;
+	static DWORD timeStart = 0;
+	static DWORD timeEnd = 0;
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
@@ -59,32 +59,36 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		DWORD costTime = GetTickCount() - timeBegin;
-		if(costTime != 0)
+		else
 		{
-			g_nFps = 1000 / costTime;
+			DWORD tickTime = timeEnd - timeStart;
+			if(tickTime != 0)
+			{
+				g_nFps = 1000 / tickTime;
 
-			HDC hdc;
-			RECT rect;
-			TCHAR buf[64];
-			swprintf(buf,L"%d",g_nFps);
-			hdc = GetDC(g_hWnd);
-			GetClientRect (g_hWnd, &rect) ;
-			rect.right = long(rect.right);
-			rect.bottom = long(rect.bottom);
+				
+				RECT rect;
+				TCHAR buf[64];
+				swprintf_s(buf,64,L"FPS:%d",g_nFps);
+				GetClientRect (g_hWnd, &rect) ;
+				rect.right = long(rect.right);
+				rect.bottom = long(rect.bottom*0.1);
+				OutPutText(g_hWnd,buf,rect);
+			}
+			timeStart = GetTickCount();
+			{
+				//mainLoop();
+				KeySetManager::Instance().Tick(tickTime);
+			}
+			DWORD timeCost = GetTickCount()- timeStart;
+			if (timeCost < timeInOneFps)   // 每帧如果快于16毫秒，则快了多少，就Sleep多少
+			{
+				float timeSleep = timeInOneFps - timeCost;
+				Sleep(DWORD(timeSleep));
+			}
+			timeEnd = GetTickCount();
 
-			OutPutText(g_hWnd,hdc,buf,rect);
-			ReleaseDC(g_hWnd,hdc);
 		}
-		timeBegin = GetTickCount();
-		//MainLoop();
-		timeTotal = GetTickCount()-timeBegin;
-		if (timeTotal < timeInOneFps)   // 每帧如果快于16毫秒，则快了多少，就Sleep多少
-		{
-			float timeSleep = timeInOneFps-timeTotal;
-			Sleep(DWORD(timeSleep));
-		}
-
 	}
 
 	return (int) msg.wParam;
@@ -194,6 +198,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+	case WM_KEYDOWN:
+		{
+			switch(wParam)
+			{
+			case VK_UP:
+				KeySetManager::Instance().KeyEvent(KeyUp, KeyType_Down);
+				break;
+			case VK_DOWN:
+				KeySetManager::Instance().KeyEvent(KeyDown, KeyType_Down);
+				break;
+			case VK_LEFT:
+				KeySetManager::Instance().KeyEvent(KeyLeft, KeyType_Down);
+				break;
+			case VK_RIGHT:
+				KeySetManager::Instance().KeyEvent(KeyRight, KeyType_Down);
+				break;
+			case VK_NUMPAD1:
+				KeySetManager::Instance().KeyEvent(KeyA, KeyType_Down);
+				break;
+			case VK_NUMPAD2:
+				KeySetManager::Instance().KeyEvent(KeyB, KeyType_Down);
+				break;
+			}
+			break;
+		}
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
@@ -218,9 +247,4 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	return (INT_PTR)FALSE;
-}
-
-void OutPutText(HWND hWnd,HDC hdc,const TCHAR* szText,RECT& rect)
-{
-	DrawText (hdc, szText, -1, &rect,DT_SINGLELINE | DT_CENTER | DT_VCENTER) ;
 }

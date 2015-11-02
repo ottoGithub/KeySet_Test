@@ -75,15 +75,23 @@
     <None Include="KeySet_Test.ico" />
     <None Include="ReadMe.txt" />
     <None Include="small.ico" />
+    <None Include="出招表.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KeyDefine.h" />
+    <ClInclude Include="KeySetSystem.h" />
     <ClInclude Include="KeySet_Test.h" />
+    <ClInclude Include="PrintLog.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KeySetSystem.cpp" />
     <ClCompile Include="KeySet_Test.cpp" />
+    <ClCompile Include="PrintLog.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

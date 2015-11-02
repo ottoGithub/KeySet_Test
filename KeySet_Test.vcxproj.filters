@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="KeySetSystem">
+      <UniqueIdentifier>{841bd6d9-fd68-403d-873c-a17bd5673e12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -22,6 +25,7 @@
     <None Include="KeySet_Test.ico">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="出招表.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -36,6 +40,18 @@
     <ClInclude Include="KeySet_Test.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="KeySetSystem.h">
+      <Filter>KeySetSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyDefine.h">
+      <Filter>KeySetSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>KeySetSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintLog.h">
+      <Filter>KeySetSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -43,6 +59,15 @@
     </ClCompile>
     <ClCompile Include="KeySet_Test.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="KeySetSystem.cpp">
+      <Filter>KeySetSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>KeySetSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintLog.cpp">
+      <Filter>KeySetSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
