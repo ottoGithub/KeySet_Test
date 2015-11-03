@@ -9,41 +9,34 @@ KeySetManager::KeySetManager()
 
 void KeySetManager::KeyEvent(int nKeyCode, int nKeyType)
 {
-	m_strKeySeq += GetVirtualKey(nKeyCode,nKeyType);
-	m_nTotalTime = 0;
+
 }
 
 void KeySetManager::Tick(int nTime)
 {
-	m_nTotalTime += nTime;
-	if(m_nTotalTime > 1000)
+	if(!m_strKeySeq.empty())
 	{
-		m_nTotalTime = 0;
-		m_strKeySeq.clear();
-		//ShowKeySeqText();
+		//GetKeyState()
 	}
 	ShowKeySeqText();
 }
 
-char* KeySetManager::GetVirtualKey(int nKeyCode, int nKeyType)
+char* KeySetManager::GetVirtualKey(int nKeyCode)
 {
-	if(nKeyType == KeyType_Down)
+	switch(nKeyCode)
 	{
-		switch(nKeyCode)
-		{
-		case KeyUp:
-			return "8";
-		case KeyDown:
-			return "2";
-		case KeyLeft:
-			return "4";
-		case KeyRight:
-			return "8";
-		case KeyA:
-			return "A";
-		case KeyB:
-			return "B";
-		}
+	case KeyUp:
+		return "8";
+	case KeyDown:
+		return "2";
+	case KeyLeft:
+		return "4";
+	case KeyRight:
+		return "6";
+	case KeyA:
+		return "A";
+	case KeyB:
+		return "B";
 	}
 	return "-";
 }
@@ -62,4 +55,27 @@ void KeySetManager::ShowKeySeqText()
 
 	OutPutText(g_hWnd,buf,rect);
 	delete buf;
+}
+
+void KeySetManager::InitVirtualKeyList()
+{
+	m_VirKeyList.push_back(new KeyState(VK_UP,false));
+	m_VirKeyList.push_back(new KeyState(VK_DOWN,false));
+	m_VirKeyList.push_back(new KeyState(VK_LEFT,false));
+	m_VirKeyList.push_back(new KeyState(VK_RIGHT,false));
+	m_VirKeyList.push_back(new KeyState(VK_NUMPAD1,false));
+	m_VirKeyList.push_back(new KeyState(VK_NUMPAD2,false));
+}
+
+void KeySetManager::InitAllKeySequence()
+{
+	//以八神A键相关技能距离
+	m_AllKeySequence.push_back(new SkillKey("A"));
+	m_AllKeySequence.push_back(new SkillKey("6A"));
+	m_AllKeySequence.push_back(new SkillKey("26A"));//暗勾手
+	m_AllKeySequence.push_back(new SkillKey("62A"));//葵花
+	m_AllKeySequence.push_back(new SkillKey("426A"));//抓
+	m_AllKeySequence.push_back(new SkillKey("626A"));//升龙
+	m_AllKeySequence.push_back(new SkillKey("2624A"));//八稚女
+	m_AllKeySequence.push_back(new SkillKey("2426A"));//八酒杯
 }

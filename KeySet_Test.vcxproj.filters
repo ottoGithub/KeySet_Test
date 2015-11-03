@@ -52,6 +52,9 @@
     <ClInclude Include="PrintLog.h">
       <Filter>KeySetSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SkillKey.h">
+      <Filter>KeySetSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -67,6 +70,9 @@
       <Filter>KeySetSystem</Filter>
     </ClCompile>
     <ClCompile Include="PrintLog.cpp">
+      <Filter>KeySetSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillKey.cpp">
       <Filter>KeySetSystem</Filter>
     </ClCompile>
   </ItemGroup>

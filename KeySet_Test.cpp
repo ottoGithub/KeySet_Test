@@ -203,24 +203,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			switch(wParam)
 			{
 			case VK_UP:
-				KeySetManager::Instance().KeyEvent(KeyUp, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_UP, KeyType_Down);
 				break;
 			case VK_DOWN:
-				KeySetManager::Instance().KeyEvent(KeyDown, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_DOWN, KeyType_Down);
 				break;
 			case VK_LEFT:
-				KeySetManager::Instance().KeyEvent(KeyLeft, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_LEFT, KeyType_Down);
 				break;
 			case VK_RIGHT:
-				KeySetManager::Instance().KeyEvent(KeyRight, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_RIGHT, KeyType_Down);
 				break;
 			case VK_NUMPAD1:
-				KeySetManager::Instance().KeyEvent(KeyA, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_NUMPAD1, KeyType_Down);
 				break;
 			case VK_NUMPAD2:
-				KeySetManager::Instance().KeyEvent(KeyB, KeyType_Down);
+				KeySetManager::Instance().KeyEvent(VK_NUMPAD2, KeyType_Down);
 				break;
 			}
+			break;
+		}
+	case WM_KEYUP:
+		{
 			break;
 		}
 	default:
